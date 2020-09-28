@@ -55,9 +55,12 @@ class CategorieController extends Controller
         $html = $this->datatableHtmlBuilder
                 ->addColumn(['data' =>'libelle', 'name' =>'libelle', 'title' =>'Libelle'])
                 ->addAction(['title'=>'Actions'])
+                ->select(true)
                 ->parameters([
-                    'dom' => 'lftrp'
+                    'dom' => 'Blftrp'
                 ])
+                ->processing(false)
+                ->setTableId('categorieTab')
                 ->language(MyDatatable::getLanguageDefinition());
 
         return  view('bo.categorie.index',compact('html','allCategories'));

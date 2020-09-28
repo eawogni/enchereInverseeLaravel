@@ -37,9 +37,6 @@
   </div>
   {{--datatable--}}
   {!! $html->table(['class' => 'table table-striped']) !!}
-  <div>
-    {{$allProduits->links()}}
-  </div>
 </div>
 
 {{--modal--}}
@@ -128,8 +125,11 @@
             </div>
 
                 <div class="form-group col">
-                  <div class="col-auto">
+                  <div class="col-md-6">
                       <button type="submit" id="btnSubmit" class="btn btn-success mb-2">@lang('Ajouter')</button>
+                  </div>
+                  <div class="col-md-6">
+                      <input type="reset" class="btn btn-secondary">
                   </div>
                 </div>
         </form>

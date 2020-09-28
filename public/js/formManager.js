@@ -1,8 +1,13 @@
+
+
 $( document ).ready(function() {
+
+    var htmlImg = "<img src='"+ $urlImg +"' with='100%'>";
+    $(document).ajaxStart($.blockUI({message:htmlImg})).ajaxStop($.unblockUI); //blockUI pulgin javascript
     formManager.init();      
 });
 /**
- * Gestionnaire des fonctionnalités d'ajout et de modification d'une ressource via ajax
+ * Gestionnaire des fonctionnalités d'ajout et de modification d'une ressource via  un modal et ajax 
  */
 var formManager = {
     /**
@@ -14,6 +19,15 @@ var formManager = {
      * Indique s'il faut utiliser le même formulaire d'ajout pour l'édition
      */
     editing_mode: true,
+
+    /**
+     * Les donnees à insérer dans le formulaire d'édition (doit être configué depuis la page index de la resource)
+     */
+    edit_data : null,
+    /**
+     * l'identifiant de la dataTable
+     */
+    idDataTable:'',
 
     /**
      * tous les inputs propres à la ressource manipulée
@@ -58,7 +72,7 @@ var formManager = {
                     url: form.attr('action'),
                     method: form.attr('method'),
                     dataType: 'json',
-                    //aramètres ajax permettant l'upload de fichiers
+                    //paramètres ajax permettant l'upload de fichiers
                     data: new FormData(this),
                     cache: false,
                     processData: false,
@@ -109,7 +123,7 @@ var formManager = {
         
         if(data.success){
         $("#messages").html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>'+data.success+'</strong> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        $('#dataTableBuilder').DataTable().ajax.reload();
+        $('#'+formManager.idDataTable).DataTable().ajax.reload();
         }
 
         if(data.error){
@@ -162,6 +176,7 @@ var formManager = {
             var hrefEdit= $(this).attr('hrefFormEdit');
             var hrefUpdate= $(this).attr('hrefUpdate');
             $('#messages').html('');
+            if(formManager.edit_data == null){
              $.ajax({
                   url: hrefEdit,
                   dataType:'json',
@@ -176,15 +191,22 @@ var formManager = {
                         }
                     });
                     
-                    $('.modal-title').text('Modifier');
-                    $('#sampleForm').attr('action',hrefUpdate);
-                    $('#sampleForm').attr('method','PUT');
-                    $('#btnSubmit').attr('value','Modifier');
-                    $('#btnSubmit').text('Modifier');
-                    $('#formModal').modal('show');
                   }
-             });
-        
+             })
+              }else{
+                $.each( formManager.edit_data, function(key,value) {
+                    var inputObject = $('#'+key);
+                    if( inputObject.attr('type') != 'file' ){
+                        inputObject.val(value);
+                    }
+                });
+            }
+            $('.modal-title').text('Modifier');
+            $('#sampleForm').attr('action',hrefUpdate);
+            $('#sampleForm').attr('method','PUT');
+            $('#btnSubmit').attr('value','Modifier');
+            $('#btnSubmit').text('Modifier');
+            $('#formModal').modal('show');
           });
     },
 

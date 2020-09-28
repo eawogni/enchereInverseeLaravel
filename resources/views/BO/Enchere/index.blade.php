@@ -25,7 +25,6 @@
    
       {{--datatable--}}
       {!! $html->table(['class' => 'table table-striped']) !!}
-      <div>{{$allEncheres->links()}}</div>
     </div>
 
     {{--modal--}}
@@ -127,6 +126,7 @@
 @push('js-bottom')
   {!! $html->scripts() !!}
   <script src="{{asset('js/formManager.js')}}"></script>
+  <script> formManager.idDataTable ="enchereTab";</script>
 @endpush
 
   

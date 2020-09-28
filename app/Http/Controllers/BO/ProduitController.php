@@ -48,8 +48,7 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $allProduits= Produit::latest()->paginate(50);
-        $produits_datatable= $allProduits->items();
+        $produits_datatable= Produit::all();
 
         if(request()->ajax()){
                 return DataTables::of($produits_datatable)
@@ -88,14 +87,20 @@ class ProduitController extends Controller
                 ->addColumn(['data' => 'img3', 'name' => 'image3', 'title' => 'Image 2','orderable' =>false])
                 ->addColumn(['data' => 'categorie', 'name' => 'categorie', 'title' => 'Categorie'])
                 ->addAction(['title' =>'Actions'])
+                ->setTableId('produit_tab')
+                ->select(true)
                 ->parameters([
-                    'dom' => 'lftrp'
+                    'dom' => 'Blftrp',
+                    
                 ])
+                ->paging(true)
+                ->pageLength(1)  //
+                ->processing(false)
                 ->language(MyDatatable::getLanguageDefinition());
 
                 $categories = Categorie::all();
 
-        return view('bo.produit.index',compact('html','categories','allProduits'));
+        return view('bo.produit.index',compact('html','categories'));
     }
 
     /**

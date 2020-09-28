@@ -9,28 +9,20 @@
 
     <title>{{ config('app.name') }} - @yield('title')</title>
 
-    <!-- Scripts -->
-    {{--jquery--}}
-        <script src="//code.jquery.com/jquery.js"></script>
-        {{--bootstrap--}}
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        {{--datatable--}}
-        <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-       
         {{--scripts propre à la page- devant être dans le head--}}
         @stack('js-head')
     <!-- Styles -->
-
-      {{-- bootstrap--}}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        
-        {{--datatable--}}
-        <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+     <!-- datatable css général -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!-- datatable option select (sélection sur une ou +sieurs ligne du tableau) -->
+   <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+   <!--fontawesome css -->
+    <link rel="stylesheet" href="{{asset('fontawesome-free-5.13.1-web/css/all.min.css')}}">
         {{--styles propres à la page--}}
         @yield('css')
 </head>
+
 
 {{--Bar de navigation--}}
 
@@ -121,6 +113,8 @@
     </div>
 </nav>
 {{--contenu--}}
+<div id='app'>
+</div>
 <body> 
 {{--Messages--}}
 
@@ -134,7 +128,17 @@
     <main class="py-4">
         @yield('content')
     </main>
-
+ <script src="{{asset('js/app.js')}}"></script>
+ <!-- datatble js général -->
+ <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+ <!--datatable option select js -->
+ <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+ <!-- blockUI ks-->
+ <script src="{{asset('js/blockUI.js?v=2.70.0-2014.11.23')}}"></script>
+ <script>
+    var $urlImg = "{{asset('images/load.gif')}}";
+ </script>
+ 
     {{--les scripts à ajouter au bas de la page--}}
     @stack('js-bottom')
 </body>

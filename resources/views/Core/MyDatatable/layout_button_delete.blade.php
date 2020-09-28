@@ -5,5 +5,5 @@
         >
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger mb-2">@lang('Supprimer')</button>
+        <button type="submit" class="btn btn-danger mb-2">@lang('Supprimer')<i class="fas fa-trash"></i></button>
 </form>

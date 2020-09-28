@@ -73,6 +73,12 @@
 @push('js-bottom')
   {!! $html->scripts() !!}
   <script src="{{asset('js/formManager.js')}}"></script>
+  <script>
+    formManager.idDataTable ="categorieTab";
+    $('#categorieTab').on('select.dt', function(e,dt){
+      formManager.edit_data = dt.row('.selected').data();
+    });
+  </script>
   
 @endpush
 

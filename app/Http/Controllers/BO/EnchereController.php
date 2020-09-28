@@ -47,8 +47,7 @@ class EnchereController extends Controller
      */
     public function index()
     {
-        $allEncheres = Enchere::latest()->paginate(50);
-        $encheres = $allEncheres->items();
+        $encheres = Enchere::all();
         if(request()->ajax()){
             return DataTables::of($encheres)
                     ->addColumn('produit',function($encheres){
@@ -83,13 +82,16 @@ class EnchereController extends Controller
                 ->addColumn(['data' =>'prix_indicatif', 'name'=>'prix_indicatif', 'title' =>'Prix Indicatif','orderable'=>false])
                 ->addColumn(['data' =>'produit', 'name'=>'produit', 'title' =>'Produit'])
                 ->addAction(['title' =>'Actions'])
+                ->select(true)
+                ->setTableId('enchereTab')
                 ->parameters([
                     'dom' => 'lftrp'
                 ])
+                ->pageLength(1)
                 ->language(MyDatatable::getLanguageDefinition());
         $produits = Produit::all();
         $hier =date('d-m-Y',strtotime('yesterday'));
-        return view('bo.enchere.index',compact('html','allEncheres','produits','hier'));
+        return view('bo.enchere.index',compact('html','produits','hier'));
     }
 
     /**

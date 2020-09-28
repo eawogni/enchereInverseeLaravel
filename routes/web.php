@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('fo_produit_index');
 })->name('index');
 
 Route::get('/home', 'HomeController@index')->name('home');
